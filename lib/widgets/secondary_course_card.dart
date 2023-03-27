@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../models/course.dart';
+import '../models/kunjungan.dart';
 
-class SecondaryCourseCard extends StatelessWidget {
-  const SecondaryCourseCard({
+class DataCard extends StatelessWidget {
+  const DataCard({
     Key? key,
     required this.course,
   }) : super(key: key);
 
-  final Course course;
+  final Kunjungan course;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       decoration: BoxDecoration(
-        color: course.bgColor,
-        borderRadius: const BorderRadius.all(Radius.circular(20)),
+        color: Colors.white,
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
       ),
       child: Row(
         children: [
@@ -25,15 +25,15 @@ class SecondaryCourseCard extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  course.title,
+                  course.kelurahan,
                   style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                        color: Colors.white,
+                        color: Colors.black87,
                         fontWeight: FontWeight.w600,
                       ),
                 ),
                 const Text(
                   "Watch video - 15 mins",
-                  style: TextStyle(color: Colors.white60, fontSize: 16),
+                  style: TextStyle(color: Colors.black87, fontSize: 16),
                 )
               ],
             ),
@@ -41,7 +41,7 @@ class SecondaryCourseCard extends StatelessWidget {
           const SizedBox(
             height: 40,
             child: VerticalDivider(
-              color: Colors.white70,
+              color: Colors.black87,
             ),
           ),
           const SizedBox(width: 8),

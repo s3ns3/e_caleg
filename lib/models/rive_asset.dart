@@ -17,23 +17,21 @@ class RiveAsset {
 
 List<RiveAsset> bottomNavs = [
   RiveAsset("assets/RiveAssets/icons.riv",
-      artboard: "CHAT", stateMachineName: "CHAT_Interactivity", title: "Chat"),
-  RiveAsset("assets/RiveAssets/icons.riv",
-      artboard: "SEARCH",
-      stateMachineName: "SEARCH_Interactivity",
-      title: "Search"),
+      artboard: "USER",
+      stateMachineName: "USER_Interactivity",
+      title: "Timses"),
   RiveAsset("assets/RiveAssets/icons.riv",
       artboard: "TIMER",
       stateMachineName: "TIMER_Interactivity",
-      title: "Chat"),
+      title: "History"),
   RiveAsset("assets/RiveAssets/icons.riv",
       artboard: "BELL",
       stateMachineName: "BELL_Interactivity",
       title: "Notifications"),
   RiveAsset("assets/RiveAssets/icons.riv",
-      artboard: "USER",
-      stateMachineName: "USER_Interactivity",
-      title: "Profile"),
+      artboard: "SETTINGS",
+      stateMachineName: "SETTINGS_Interactivity",
+      title: "Setting"),
 ];
 
 List<RiveAsset> sideMenus = [
@@ -45,21 +43,21 @@ List<RiveAsset> sideMenus = [
   ),
   RiveAsset(
     "assets/RiveAssets/icons.riv",
-    artboard: "SEARCH",
-    stateMachineName: "SEARCH_Interactivity",
-    title: "Search",
+    artboard: "USER",
+    stateMachineName: "USER_Interactivity",
+    title: "Tim Sukses",
   ),
   RiveAsset(
     "assets/RiveAssets/icons.riv",
     artboard: "LIKE/STAR",
     stateMachineName: "STAR_Interactivity",
-    title: "Favorites",
+    title: "Agenda",
   ),
   RiveAsset(
     "assets/RiveAssets/icons.riv",
-    artboard: "CHAT",
-    stateMachineName: "CHAT_Interactivity",
-    title: "Help",
+    artboard: "SETTINGS",
+    stateMachineName: "SETTINGS_Interactivity",
+    title: "Pengaturan",
   ),
 ];
 
@@ -68,12 +66,12 @@ List<RiveAsset> sideMenu2 = [
     "assets/RiveAssets/icons.riv",
     artboard: "TIMER",
     stateMachineName: "TIMER_Interactivity",
-    title: "History",
+    title: "Riwayat Kunjungan",
   ),
   RiveAsset(
     "assets/RiveAssets/icons.riv",
     artboard: "BELL",
     stateMachineName: "BELL_Interactivity",
-    title: "Notification",
+    title: "Notifikasi",
   ),
 ];

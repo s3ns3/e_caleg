@@ -1,4 +1,5 @@
 import 'package:e_caleg/models/rive_asset.dart';
+import 'package:e_caleg/utils/constants.dart';
 import 'package:e_caleg/utils/rive_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,19 +24,19 @@ class _SideMenuState extends State<SideMenu> {
       body: Container(
         width: 288,
         height: double.infinity,
-        color: const Color(0xFF17203A),
+        color: backgroundColor2,
         child: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const InfoCard(
                 name: "Abu Anwar",
-                profession: "YouTuber",
+                profession: "Caleg",
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 24, top: 32, bottom: 16),
                 child: Text(
-                  "Browse".toUpperCase(),
+                  "Menu".toUpperCase(),
                   style: Theme.of(context)
                       .textTheme
                       .titleMedium!

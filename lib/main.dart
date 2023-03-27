@@ -1,4 +1,6 @@
 import 'package:e_caleg/screens/main_menu_screen.dart';
+import 'package:e_caleg/screens/splash_screen.dart';
+import 'package:e_caleg/service/navigation_service.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,6 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Ecaleg',
+      navigatorKey: NavigationService.get().navigatorKey,
       theme: ThemeData(
         scaffoldBackgroundColor: const Color(0xFFEEF1F8),
         primarySwatch: Colors.blue,
@@ -27,7 +30,7 @@ class MyApp extends StatelessWidget {
           errorBorder: defaultInputBorder,
         ),
       ),
-      home: const MainMenuScreen(),
+      home: const SplashScreen(),
     );
   }
 }
