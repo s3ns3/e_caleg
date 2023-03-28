@@ -185,14 +185,14 @@ class _MainMenuScreenState extends State<MainMenuScreen>
               icon: Image.asset(
                 menuVO.icon,
                 color: Colors.grey,
-                width: 30,
-                height: 30,
+                width: 25,
+                height: 25,
               ),
               activeIcon: Image.asset(
                 menuVO.icon,
                 color: Colors.black,
-                width: 30,
-                height: 30,
+                width: 25,
+                height: 25,
               ),
               label: menuVO.label);
         }).toList());

@@ -1,3 +1,4 @@
+import 'package:e_caleg/constants/apps_theme.dart';
 import 'package:e_caleg/utils/apps_ui_constant.dart';
 import 'package:e_caleg/widgets/apps_button.dart';
 import 'package:e_caleg/widgets/apps_gradient_button.dart';
@@ -88,7 +89,7 @@ class HomeScreen extends StatelessWidget {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('Total saksi saat ini'),
+                                  Text('Total saksi saat ini',style: TextStyle(fontSize: fontSizeSmall),),
                                   Row(
                                     children: [
                                       Text(
@@ -106,7 +107,7 @@ class HomeScreen extends StatelessWidget {
                             ],
                           ),
                           AppsGradientButton(
-                            width: 150,
+                            width: 120,
                             height: 30,
                             textColor: Colors.white,
                             label: '+ Tambah Saksi',
@@ -127,7 +128,7 @@ class HomeScreen extends StatelessWidget {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('Total Formulir C1'),
+                                  Text('Total Formulir C1',style: TextStyle(fontSize: fontSizeSmall)),
                                   Row(
                                     children: [
                                       Text(
@@ -145,7 +146,7 @@ class HomeScreen extends StatelessWidget {
                             ],
                           ),
                           AppsGradientButton(
-                            width: 150,
+                            width: 120,
                             height: 30,
                             textColor: Colors.white,
                             label: 'Cari Formulir',
@@ -166,7 +167,7 @@ class HomeScreen extends StatelessWidget {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('Total TPS dengan saksi'),
+                                  Text('Total TPS dengan saksi',style: TextStyle(fontSize: fontSizeSmall),),
                                   Row(
                                     children: [
                                       Text(
@@ -184,7 +185,7 @@ class HomeScreen extends StatelessWidget {
                             ],
                           ),
                           AppsGradientButton(
-                            width: 150,
+                            width: 120,
                             height: 30,
                             textColor: Colors.white,
                             label: 'Cari TPS',
@@ -194,8 +195,11 @@ class HomeScreen extends StatelessWidget {
                       )
                     ]),
                   ),
+
+                  const SizedBox(height: 60),
                 ],
               ),
+
             ),
           ],
         ),

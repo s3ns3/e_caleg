@@ -1,4 +1,9 @@
+import 'package:e_caleg/constants/apps_constant.dart';
+import 'package:e_caleg/service/apps_menu_service.dart';
+import 'package:e_caleg/service/apps_service.dart';
+import 'package:e_caleg/utils/apps_rc.dart';
 import 'package:e_caleg/vo/content_input_vo.dart';
+import 'package:e_caleg/vo/service_response_vo.dart';
 import 'package:flutter/material.dart';
 
 class LoginLogic {
@@ -60,82 +65,24 @@ class LoginLogic {
       isLabel: false,
       hasNext: false
   );
-  final inputSkinType = ContentInputVO(
-      label: 'Skin Type',
-      inputType: ContentInputType.list,
-      color: Colors.transparent,
-      isLabel: false,
-      hasNext: false
-  );
-  final inputPregnancyPlaning = ContentInputVO(
-      label: 'Pregnancy Planing',
-      inputType: ContentInputType.list,
-      color: Colors.transparent,
-      isLabel: false,
-      hasNext: false
-  );
-  final inputSmoker = ContentInputVO(
-      label: 'Smoker',
-      inputType: ContentInputType.list,
-      color: Colors.transparent,
-      isLabel: false,
-      hasNext: false
-  );
-  final inputWaterConsumption = ContentInputVO(
-      label: 'Water Consumption',
-      inputType: ContentInputType.list,
-      color: Colors.transparent,
-      isLabel: false,
-      hasNext: false
-  );
-  final inputDietPlan = ContentInputVO(
-      label: 'Diet Plan',
-      inputType: ContentInputType.list,
-      color: Colors.transparent,
-      isLabel: false,
-      hasNext: false
-  );
-  final inputRoutine = ContentInputVO(
-      label: 'Routine beauty product currently used',
-      inputType: ContentInputType.text,
-      color: Colors.transparent,
-      isLabel: false,
-      hasNext: false
-  );
-  final inputMedication = ContentInputVO(
-      label: 'Medication',
-      inputType: ContentInputType.text,
-      color: Colors.transparent,
-      isLabel: false,
-      hasNext: false
-  );
-  final inputAllergies = ContentInputVO(
-      label: 'Allergies',
-      inputType: ContentInputType.text,
-      color: Colors.transparent,
-      isLabel: false,
-      hasNext: false
-  );
-  final inputSurgery = ContentInputVO(
-      label: 'Surgery',
-      inputType: ContentInputType.text,
-      color: Colors.transparent,
-      isLabel: false,
-      hasNext: false
-  );
-  final inputSkinProblem = ContentInputVO(
-      label: 'Skin Problem',
-      inputType: ContentInputType.text,
-      color: Colors.transparent,
-      isLabel: false,
-      hasNext: false
-  );
 
-  final inputAgree = ContentInputVO(
-      label: 'Agree to Term and Conditions',
-      inputType: ContentInputType.checkBox,
-      color: Colors.transparent,
-      isLabel: false,
-      hasNext: false
+
+  final inputNewPassword = ContentInputVO(
+    label: 'Password baru',
+    autoFocus: true,
+    maxLength: 7,
+    inputType: ContentInputType.password,
   );
+  final inputConfirmPassword = ContentInputVO(
+      maxLength: 7,
+      label: 'Konfirmasi password baru',
+      inputType: ContentInputType.password);
+
+  Future<ServiceResponseVO> initLogic() async {
+    // prepare for list of master data
+    inputLoginType.selections = AppsService.get()
+        .findGeneralSelectionFor(kSelectionItemLoginType);
+    return ServiceResponseVO(rcSuccess, '');
+  }
+
 }
