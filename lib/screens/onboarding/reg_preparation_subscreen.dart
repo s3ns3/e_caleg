@@ -67,47 +67,50 @@ class RegPreparationSubscreen extends BaseRegSubScreen {
               label: 'AMBIL FOTO',
               boxColor: gradientButton,
               onPressed: () async {
-                // try {
-                //   OcrResultModel res = await MncIdentifierOcr.startCaptureKtp(withFlash: true, cameraOnly: true);
-                //   debugPrint('result: ${res.toString()}');
-                //   if(res.isSuccess ?? false) {
-                //     NavigationService.get().push(KtpRegisSubScreen(res: res));
-                //   }
-                // } catch (e) {
-                //   debugPrint('something goes wrong $e');
-                // }
-
-                // For test
-                final picker = ImagePicker();
-                var filePicked = await picker.pickImage(
-                    source: ImageSource.camera,
-                    maxWidth: 2048.0,
-                    maxHeight: 2048.0,
-                    preferredCameraDevice: CameraDevice.front);
-                OcrResultModel res = OcrResultModel(
-                    isSuccess: true,
-                    errorMessage: '',
-                    imagePath: filePicked?.path ?? '',
-                    ktp: new Ktp(
-                        nik: '',
-                        nama: '',
-                        tempatLahir: 'tempatLahir',
-                        golDarah: 'golDarah',
-                        tglLahir: 'tglLahir',
-                        jenisKelamin: 'jenisKelamin',
-                        alamat: 'alamat',
-                        rt: 'rt',
-                        rw: 'rw',
-                        kelurahan: 'kelurahan',
-                        kecamatan: 'kecamatan',
-                        agama: 'agama',
-                        statusPerkawinan: 'statusPerkawinan',
-                        pekerjaan: 'pekerjaan',
-                        kewarganegaraan: 'kewarganegaraan',
-                        berlakuHingga: 'berlakuHingga',
-                        provinsi: 'provinsi',
-                        kabKot: 'kabKot'));
-                NavigationService.get().push(KtpRegisSubScreen(res: res));
+                if(Foundation.kReleaseMode) {
+                  try {
+                    OcrResultModel res = await MncIdentifierOcr.startCaptureKtp(
+                        withFlash: true, cameraOnly: true);
+                    debugPrint('result: ${res.toString()}');
+                    if (res.isSuccess ?? false) {
+                      NavigationService.get().push(KtpRegisSubScreen(res: res));
+                    }
+                  } catch (e) {
+                    debugPrint('something goes wrong $e');
+                  }
+                }else {
+                  // For test
+                  final picker = ImagePicker();
+                  var filePicked = await picker.pickImage(
+                      source: ImageSource.camera,
+                      maxWidth: 2048.0,
+                      maxHeight: 2048.0,
+                      preferredCameraDevice: CameraDevice.front);
+                  OcrResultModel res = OcrResultModel(
+                      isSuccess: true,
+                      errorMessage: '',
+                      imagePath: filePicked?.path ?? '',
+                      ktp: new Ktp(
+                          nik: '1231243523523523',
+                          nama: 'SAMSUL BAHARI',
+                          tempatLahir: 'tempatLahir',
+                          golDarah: 'golDarah',
+                          tglLahir: 'tglLahir',
+                          jenisKelamin: 'jenisKelamin',
+                          alamat: 'alamat',
+                          rt: 'rt',
+                          rw: 'rw',
+                          kelurahan: 'kelurahan',
+                          kecamatan: 'kecamatan',
+                          agama: 'agama',
+                          statusPerkawinan: 'statusPerkawinan',
+                          pekerjaan: 'pekerjaan',
+                          kewarganegaraan: 'kewarganegaraan',
+                          berlakuHingga: 'berlakuHingga',
+                          provinsi: 'provinsi',
+                          kabKot: 'kabKot'));
+                  NavigationService.get().push(KtpRegisSubScreen(res: res));
+                }
               },
             ))
       ],

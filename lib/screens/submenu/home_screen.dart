@@ -89,7 +89,7 @@ class HomeScreen extends StatelessWidget {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('Total saksi saat ini',style: TextStyle(fontSize: fontSizeSmall),),
+                                  Text('Total timses saat ini',style: TextStyle(fontSize: fontSizeSmall),),
                                   Row(
                                     children: [
                                       Text(
@@ -109,8 +109,9 @@ class HomeScreen extends StatelessWidget {
                           AppsGradientButton(
                             width: 120,
                             height: 30,
+                            fontSize: kFontSizeSmall,
                             textColor: Colors.white,
-                            label: '+ Tambah Saksi',
+                            label: '+ Tambah Timses',
                             onPressed: () {},
                           )
                         ],
@@ -148,6 +149,7 @@ class HomeScreen extends StatelessWidget {
                           AppsGradientButton(
                             width: 120,
                             height: 30,
+                            fontSize: kFontSizeSmall,
                             textColor: Colors.white,
                             label: 'Cari Formulir',
                             onPressed: () {},
@@ -187,8 +189,9 @@ class HomeScreen extends StatelessWidget {
                           AppsGradientButton(
                             width: 120,
                             height: 30,
+                            fontSize: kFontSizeSmall,
                             textColor: Colors.white,
-                            label: 'Cari TPS',
+                            label: 'Lihat TPS',
                             onPressed: () {},
                           )
                         ],

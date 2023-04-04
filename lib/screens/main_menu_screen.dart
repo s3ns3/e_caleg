@@ -5,6 +5,9 @@ import 'package:e_caleg/models/menu_btn.dart';
 import 'package:e_caleg/models/rive_asset.dart';
 import 'package:e_caleg/screens/submenu/dummy_screen.dart';
 import 'package:e_caleg/screens/submenu/home_screen.dart';
+import 'package:e_caleg/screens/submenu/peta_subscreen.dart';
+import 'package:e_caleg/screens/submenu/saksi_subscreen.dart';
+import 'package:e_caleg/screens/submenu/timses_subscreen.dart';
 import 'package:e_caleg/service/apps_menu_service.dart';
 import 'package:e_caleg/utils/constants.dart';
 import 'package:e_caleg/utils/rive_utils.dart';
@@ -145,8 +148,9 @@ class _MainMenuScreenState extends State<MainMenuScreen>
             controller: _pageController,
             children: [
               HomeScreen(),
-              DummyScreen(),
-              DummyScreen(),
+              TimsesScreen(),
+              SaksiScreen(),
+              PetaScreen(),
               DummyScreen(),
             ],
             onPageChanged: (idx) {

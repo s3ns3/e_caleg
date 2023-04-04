@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mnc_identifier_ocr/mnc_identifier_ocr.dart';
 import 'package:mnc_identifier_ocr/model/ocr_result_model.dart';
+import 'package:flutter/foundation.dart' as Foundation;
 
 import '../models/kunjungan.dart';
 
@@ -109,14 +110,49 @@ class KunjunganCard extends StatelessWidget {
                                               width: 60.0,
                                               fontSize: 10,
                                               onPressed: () async{
-                                                try {
-                                                  OcrResultModel res = await MncIdentifierOcr.startCaptureKtp(withFlash: true, cameraOnly: true);
-                                                  debugPrint('result: ${res.toString()}');
-                                                  if(res.isSuccess ?? false) {
-                                                    NavigationService.get().push(KtpScreen(res: res));
+                                                if(Foundation.kReleaseMode) {
+                                                  try {
+                                                    OcrResultModel res = await MncIdentifierOcr.startCaptureKtp(
+                                                        withFlash: true, cameraOnly: true);
+                                                    debugPrint('result: ${res.toString()}');
+                                                    if (res.isSuccess ?? false) {
+                                                      NavigationService.get().push(KtpScreen(res: res));
+                                                    }
+                                                  } catch (e) {
+                                                    debugPrint('something goes wrong $e');
                                                   }
-                                                } catch (e) {
-                                                  debugPrint('something goes wrong $e');
+                                                }else {
+                                                  // For test
+                                                  final picker = ImagePicker();
+                                                  var filePicked = await picker.pickImage(
+                                                      source: ImageSource.camera,
+                                                      maxWidth: 2048.0,
+                                                      maxHeight: 2048.0,
+                                                      preferredCameraDevice: CameraDevice.front);
+                                                  OcrResultModel res = OcrResultModel(
+                                                      isSuccess: true,
+                                                      errorMessage: '',
+                                                      imagePath: filePicked?.path ?? '',
+                                                      ktp: new Ktp(
+                                                          nik: '1231243523523523',
+                                                          nama: 'SAMSUL BAHARI',
+                                                          tempatLahir: 'tempatLahir',
+                                                          golDarah: 'golDarah',
+                                                          tglLahir: 'tglLahir',
+                                                          jenisKelamin: 'jenisKelamin',
+                                                          alamat: 'alamat',
+                                                          rt: 'rt',
+                                                          rw: 'rw',
+                                                          kelurahan: 'kelurahan',
+                                                          kecamatan: 'kecamatan',
+                                                          agama: 'agama',
+                                                          statusPerkawinan: 'statusPerkawinan',
+                                                          pekerjaan: 'pekerjaan',
+                                                          kewarganegaraan: 'kewarganegaraan',
+                                                          berlakuHingga: 'berlakuHingga',
+                                                          provinsi: 'provinsi',
+                                                          kabKot: 'kabKot'));
+                                                  NavigationService.get().push(KtpScreen(res: res));
                                                 }
                                               }),
                                           SizedBox(width: 3.0),

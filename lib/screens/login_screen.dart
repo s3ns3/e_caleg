@@ -102,6 +102,7 @@ class LoginScreen extends StatelessWidget {
                                   width: MediaQuery.of(context).size.width * .5,
                                   child: AppsGradientButton(
                                     label: 'LOGIN',
+                                    height: 42,
                                     radius: 5.0,
                                     boxColor: LinearGradient(
                                         begin: Alignment.topRight,
