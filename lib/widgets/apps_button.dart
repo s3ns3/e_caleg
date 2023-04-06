@@ -25,7 +25,7 @@ class AppsButton extends StatelessWidget {
       child: Container(
         width: width,
         alignment: Alignment.center,
-        padding: const EdgeInsets.symmetric(horizontal: 5.0,vertical: 3.0),
+        padding: const EdgeInsets.symmetric(horizontal: 5.0,vertical: 12.0),
         decoration: BoxDecoration(
           color: buttonColor,
             boxShadow: const [BoxShadow(color: Colors.grey)],

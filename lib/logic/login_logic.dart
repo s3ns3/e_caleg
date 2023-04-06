@@ -8,6 +8,14 @@ import 'package:flutter/material.dart';
 
 class LoginLogic {
   static const ID = 'LoginLogic';
+  final inputPhoneNo = ContentInputVO(
+      paramName: 'paramPhoneNo',
+      label: 'Nomor HandPhone',
+      inputType: ContentInputType.numericPhoneNo,
+      isLabel: false,
+      hasNext: false
+  );
+
   final inputPassword = ContentInputVO(
       paramName: 'paramPassword',
       label: 'Password',

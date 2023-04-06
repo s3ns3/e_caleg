@@ -33,6 +33,7 @@ class AppsGradientButton extends StatelessWidget {
         width: width,
         height: height,
         decoration: BoxDecoration(
+          boxShadow: const [BoxShadow(color: Colors.black38, offset: Offset(0, 6), blurRadius: 2.0)],
             gradient: boxColor, borderRadius: BorderRadius.circular(radius)),
         child: Text(
           label,

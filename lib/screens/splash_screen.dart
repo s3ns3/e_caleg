@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:e_caleg/bloc/splash_bloc.dart';
-import 'package:e_caleg/screens/login_screen.dart';
+import 'package:e_caleg/screens/new/login_screen.dart';
 import 'package:e_caleg/service/navigation_service.dart';
 import 'package:e_caleg/utils/apps_rc.dart';
 import 'package:e_caleg/utils/apps_ui_constant.dart';

@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       title: 'Ecaleg',
       navigatorKey: NavigationService.get().navigatorKey,
       theme: ThemeData(
-        scaffoldBackgroundColor: const Color(0xFFEEF1F8),
+        scaffoldBackgroundColor: Colors.white,
         primarySwatch: Colors.blue,
         fontFamily: "Intel",
         inputDecorationTheme: const InputDecorationTheme(
