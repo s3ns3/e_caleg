@@ -1,7 +1,8 @@
-import 'package:e_caleg/screens/main_menu_screen.dart';
 import 'package:e_caleg/screens/splash_screen.dart';
 import 'package:e_caleg/service/navigation_service.dart';
+import 'package:e_caleg/utils/apps_ui_constant.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,12 +14,12 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(statusBarColor: const Color(0xFF1F8AD3).withOpacity(0.8)));
     return MaterialApp(
       title: 'Ecaleg',
       navigatorKey: NavigationService.get().navigatorKey,
       theme: ThemeData(
-        scaffoldBackgroundColor: const Color(0xFFEEF1F8),
-        primarySwatch: Colors.blue,
         fontFamily: "Intel",
         inputDecorationTheme: const InputDecorationTheme(
           filled: true,
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
           enabledBorder: defaultInputBorder,
           focusedBorder: defaultInputBorder,
           errorBorder: defaultInputBorder,
-        ),
+        ), colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blue).copyWith(background: Colors.blue),
       ),
       home: const SplashScreen(),
     );

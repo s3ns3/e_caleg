@@ -15,10 +15,7 @@ const kMarginTop = 10.0;
 const kMarginBottom = 10.0;
 
 const kMarginTopBody = 30.0;
-const kMarginLeftBody = 20.0;
-const kMarginRightBody = 20.0;
-const kMarginBottomBody = 30.0;
-
+const kMarginBodyHorizontal = 20.0;
 const kRoundedCornerSize = 15.0;
 
 const kBlurRadius = 36.0;
@@ -26,10 +23,9 @@ const kOffset = 6.0;
 
 const Gradient gradientButton = LinearGradient(
     begin: Alignment.topLeft,
-    end:  Alignment.bottomRight,
-    colors: [kColorBlueDark,kColorBlueLight,kColorBlueWhite],
-    tileMode: TileMode.clamp
-);
+    end: Alignment.bottomRight,
+    colors: [kColorBlueDark, kColorBlueLight, kColorBlueWhite],
+    tileMode: TileMode.clamp);
 
 // color
 const kColorPrimary = Color(0xFFe0dbc5);
@@ -68,6 +64,15 @@ const Gradient kButtonGradient = LinearGradient(
       kColorButtonRed
     ],
     tileMode: TileMode.clamp);
+const Gradient kLinearGradient = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [
+      Color(0xFF0057A8),
+      Color(0xFF1F8AD3),
+      Color(0xFF1F9FEA),
+      Color(0xFF1FB2FF)
+    ]);
 
 const kColorError = Colors.red;
 
@@ -87,7 +92,7 @@ const SETTING_DATA = 'd';
 
 const ID_ENC_KEY = 1;
 const ID_LANG = 2;
-const ID_API_KEY = 3;//enc
+const ID_API_KEY = 3; //enc
 
 const kPaymentMethodCryptshark = 1;
 const kPaymentMethodCard = 2;

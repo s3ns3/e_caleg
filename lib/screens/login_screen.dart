@@ -1,7 +1,5 @@
 import 'package:e_caleg/logic/login_logic.dart';
-import 'package:e_caleg/screens/main_menu_screen.dart';
-import 'package:e_caleg/screens/onboarding/reg_preparation_subscreen.dart';
-import 'package:e_caleg/screens/submenu/home_screen.dart';
+import 'package:e_caleg/screens/home_screen.dart';
 import 'package:e_caleg/service/navigation_service.dart';
 import 'package:e_caleg/utils/apps_ui_constant.dart';
 import 'package:e_caleg/widgets/apps_button.dart';
@@ -55,29 +53,8 @@ class LoginScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 50.0),
                   child: Column(
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text('SING IN  |',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: kFontSizeHeader,
-                                  fontWeight: FontWeight.bold)),
-                          InkWell(
-                            child: const Text('SING UP',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: kFontSizeHeader,
-                                    fontWeight: FontWeight.bold)),
-                            onTap: () {
-                              NavigationService.get().push(RegPreparationSubscreen());
-                            },
-                          )
-                        ],
-                      ),
-                      AppsInput(inputVO: logic.inputEmail),
+                      AppsInput(inputVO: logic.inputPhoneNo),
                       AppsInput(inputVO: logic.inputPassword),
-                      AppsInput(inputVO: logic.inputLoginType),
                       Container(
                           padding: const EdgeInsets.symmetric(vertical: 5.0),
                           alignment: Alignment.topRight,
@@ -108,14 +85,13 @@ class LoginScreen extends StatelessWidget {
                                         begin: Alignment.topRight,
                                         end: Alignment.bottomLeft,
                                         colors: [
-                                          kColorBlueWhite,
-                                          kColorBlueLight,
-                                          kColorBlueWhite,
+                                          Color(0xFF1FB2FF),
+                                          Color(0xFF1FB2FF),
                                         ],
                                         tileMode: TileMode.clamp),
                                     onPressed: () {
                                       NavigationService.get()
-                                          .pushReplacement(MainMenuScreen());
+                                          .pushReplacement(HomeScreen());
                                     },
                                   )),
                               InkWell(
@@ -125,7 +101,7 @@ class LoginScreen extends StatelessWidget {
                                         bool auth = await localAuth.authenticate(
                                             localizedReason: 'Pindai sidik jari anda');
                                         if (auth) {
-                                          NavigationService.get().pushAndRemoveAll(MainMenuScreen());
+                                          NavigationService.get().pushAndRemoveAll(HomeScreen());
                                         }
                                       } catch (e) {
                                         showAppsErrorDialog(context, e.toString());

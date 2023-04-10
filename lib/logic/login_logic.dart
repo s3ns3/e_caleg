@@ -16,8 +16,8 @@ class LoginLogic {
       hasNext: false
   );
 
-  final inputEmail = ContentInputVO(
-      label: 'E-mail',
+  final inputPhoneNo = ContentInputVO(
+      label: 'Nomor Hanphone',
       inputType: ContentInputType.text,
       isLabel: false,
       hasNext: false
