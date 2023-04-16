@@ -1,11 +1,13 @@
 import 'package:e_caleg/logic/login_logic.dart';
 import 'package:e_caleg/screens/home_screen.dart';
 import 'package:e_caleg/service/navigation_service.dart';
+import 'package:e_caleg/utils/apps_rc.dart';
 import 'package:e_caleg/utils/apps_ui_constant.dart';
 import 'package:e_caleg/widgets/apps_button.dart';
 import 'package:e_caleg/widgets/apps_error_dialog.dart';
 import 'package:e_caleg/widgets/apps_gradient_button.dart';
 import 'package:e_caleg/widgets/apps_input.dart';
+import 'package:e_caleg/widgets/apps_progress_dialog.dart';
 import 'package:e_caleg/widgets/loading_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -90,8 +92,7 @@ class LoginScreen extends StatelessWidget {
                                         ],
                                         tileMode: TileMode.clamp),
                                     onPressed: () {
-                                      NavigationService.get()
-                                          .pushReplacement(HomeScreen());
+                                      _processLogin(context, true);
                                     },
                                   )),
                               InkWell(
@@ -135,5 +136,31 @@ class LoginScreen extends StatelessWidget {
             ],
           ),
         )));
+  }
+
+  Future _processLogin(BuildContext context, bool usePassword) async {
+    final AppsProgressDialog pd;
+    if (usePassword) {
+      pd = AppsProgressDialog(
+          context, 'Memproses Login', logic.requestLoginPass());
+    } else {
+      // pd = AppsProgressDialog(
+      //     context, 'Memproses Login', logic.processLoginBioToken());
+
+      pd = AppsProgressDialog(
+          context, 'Memproses Login', logic.requestLoginPass());
+    }
+    final respVO = await pd.show();
+    if (respVO.rc == rcSuccess) {
+      NavigationService.get().pushReplacement(const HomeScreen());
+    // } else if (respVO.rc == rcAppsLoginNeedOtp) {
+    //   NavigationService.get().push(LoginOtpScreen(logic: widget.logic));
+    // } else if (respVO.rc == rcAppsLoginNeedCreatePin) {
+    //   NavigationService.get().push(LoginCreatePinScreen(logic: widget.logic, confirmPin: false));
+    } else {
+      // if(mounted) {
+        showAppsErrorDialog(context, respVO.msg);
+      // }
+    }
   }
 }

@@ -9,6 +9,16 @@ const kPageDataLoginFinger = 3;
 
 const kPageUploadFull= 1;
 
-
-
+const kEngineUrlDebug = 'https://saksi.punyasurya.com/api/';
+const kEngineUrlRelease = 'https://gateway.emobile.co.id/east_tesbed';
+const kAllowAllSsl = true;
 const rcPictureNotTaken = 'X501';
+const kHttpTimeoutConnect = 60 * 1000; // seems bugs in DIO, where connectTimeout is used as receiveTimeout
+const kHttpTimeoutForImage = 30 * 1000; // Duration(seconds: 10); 10s
+const kHttpTimeoutForPost = 30 * 1000; // Duration(seconds: 10);
+const kHttpTimeoutForUploadFile = 60 * 1000;
+const kLogoutDelay = Duration(seconds: 500);
+
+const kAppsMsgErrSystem = 'Terjadi masalah pada sistem';
+
+const kEndponitLoginPass = 'auth';
