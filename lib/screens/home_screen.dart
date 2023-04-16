@@ -64,21 +64,15 @@ class HomeScreen extends StatelessWidget {
                     children: [
                       Container(
                         decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(50.0),
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Colors.black54,
-                              offset: Offset(1, 2),
-                              blurRadius: 5,
-                            )
-                          ],
+                          color: const Color(0xFFD9D9D9),
+                          borderRadius: BorderRadius.circular(120.0),
+                          border: Border.all(color: Colors.white, width: 6.0),
                         ),
-                        padding: const EdgeInsets.all(10.0),
+                        padding: const EdgeInsets.all(16.0),
                         child: Image.asset(
                           'assets/images/icons/user.png',
-                          width: 80.0,
-                          height: 80.0,
+                          width: 60.0,
+                          height: 60.0,
                         ),
                       ),
                       const SizedBox(height: 10.0),
@@ -130,7 +124,8 @@ class HomeScreen extends StatelessWidget {
                           onPressed: () {
                             NavigationService.get().push(UploadFullSubscreen(title: 'Upload C1 DPRD'));
                           },
-                        )
+                        ),
+                        const SizedBox(height: 5.0),
                       ],
                     ),
                   ))

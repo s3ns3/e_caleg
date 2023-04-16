@@ -2,6 +2,7 @@ import 'package:e_caleg/bloc/refresh_screen_bloc.dart';
 import 'package:e_caleg/constants/apps_constant.dart';
 import 'package:e_caleg/logic/upload_logic.dart';
 import 'package:e_caleg/screens/base_upload_screen.dart';
+import 'package:e_caleg/screens/upload/form_result_subscreen.dart';
 import 'package:e_caleg/service/apps_service.dart';
 import 'package:e_caleg/utils/apps_rc.dart';
 import 'package:e_caleg/utils/apps_ui_constant.dart';
@@ -11,6 +12,8 @@ import 'package:e_caleg/widgets/apps_gradient_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' as Foundation;
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../service/navigation_service.dart';
 
 class UploadFullSubscreen extends BaseUploadScreen {
   static const id = 'RegPreparationSubscreen';
@@ -39,7 +42,7 @@ class UploadFullSubscreen extends BaseUploadScreen {
     return index;
   }
 
-  int index = 1;
+  int index = 16;
   @override
   Widget buildSubScreen(BuildContext context, RefreshScreenCubit bloc) {
     // return LoadingWidget(
@@ -88,10 +91,14 @@ class UploadFullSubscreen extends BaseUploadScreen {
                           radius: 15.0,
                           fontSize: kFontSizeXLarge,
                           onPressed: () {
-                            logic.resetData();
-                            index = index + 1;
-                            setIndex();
-                            bloc.refreshScreen();
+                            if(index != 16) {
+                              logic.resetData();
+                              index = index + 1;
+                              setIndex();
+                              bloc.refreshScreen();
+                            }  else {
+                              _readFromPhoto(context);
+                            }
                           },
                         )
                       : Container()
@@ -109,5 +116,10 @@ class UploadFullSubscreen extends BaseUploadScreen {
     } else {
       showAppsErrorDialog(context, respVO.msg);
     }
+  }
+
+  void _readFromPhoto(BuildContext context) async {
+    final result = await logic.recognizeTextFromPhoto();
+    NavigationService.get().push(FormResultSubscreen(title: 'Hasil Perhitungan Suara', recognizedText: result,));
   }
 }

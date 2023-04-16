@@ -3,10 +3,12 @@ import 'dart:io';
 import 'package:e_caleg/constants/apps_constant.dart';
 import 'package:e_caleg/service/apps_service.dart';
 import 'package:e_caleg/utils/apps_rc.dart';
+import 'package:e_caleg/vo/content_input_vo.dart';
 import 'package:e_caleg/vo/selection_item.dart';
 import 'package:e_caleg/vo/service_response_vo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 
 class UploadLogic{
 
@@ -49,5 +51,13 @@ class UploadLogic{
 
     pathPhoto = file.path;
     return ServiceResponseVO(rcSuccess, '');
+  }
+
+  Future<RecognizedText> recognizeTextFromPhoto() async {
+    final textRecognizer = TextRecognizer(script: TextRecognitionScript.latin);
+    InputImage inputImage = InputImage.fromFilePath(pathPhoto!);
+    final RecognizedText recognizedText = await textRecognizer.processImage(inputImage);
+    textRecognizer.close();
+    return recognizedText;
   }
 }
