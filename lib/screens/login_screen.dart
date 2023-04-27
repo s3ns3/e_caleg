@@ -83,7 +83,7 @@ class LoginScreen extends StatelessWidget {
                                     label: 'LOGIN',
                                     height: 42,
                                     radius: 5.0,
-                                    boxColor: LinearGradient(
+                                    boxColor: const LinearGradient(
                                         begin: Alignment.topRight,
                                         end: Alignment.bottomLeft,
                                         colors: [

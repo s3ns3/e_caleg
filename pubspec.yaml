@@ -54,6 +54,7 @@ dependencies:
   pointycastle: ^3.2.0
   # for showing progress dialog
   ndialog: ^4.3.0
+  image_cropper: ^3.0.3
 
 dev_dependencies:
   flutter_test:

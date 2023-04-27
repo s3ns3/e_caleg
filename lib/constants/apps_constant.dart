@@ -1,6 +1,7 @@
 const  kJumlahPartai = 17;
 const  kSelectionItemLoginType = 1;
 const  kSelectionItemPartai = 2;
+const  kListCaleg = 3;
 
 const kPagePreparation = 0;
 const kPageDataPersonal = 1;
@@ -9,8 +10,9 @@ const kPageDataLoginFinger = 3;
 
 const kPageUploadFull= 1;
 
-const kEngineUrlDebug = 'https://saksi.punyasurya.com/api/';
-const kEngineUrlRelease = 'https://gateway.emobile.co.id/east_tesbed';
+// const kEngineUrlDebug = 'https://saksi.punyasurya.com/api/';
+const kEngineUrlDebug = 'http://192.168.1.22:8080/';
+const kEngineUrlRelease = 'https://saksi.punyasurya.com/api/';
 const kAllowAllSsl = true;
 const rcPictureNotTaken = 'X501';
 const kHttpTimeoutConnect = 60 * 1000; // seems bugs in DIO, where connectTimeout is used as receiveTimeout
@@ -22,3 +24,4 @@ const kLogoutDelay = Duration(seconds: 500);
 const kAppsMsgErrSystem = 'Terjadi masalah pada sistem';
 
 const kEndponitLoginPass = 'auth';
+const kEndponitDocumentInit = 'upload-document';

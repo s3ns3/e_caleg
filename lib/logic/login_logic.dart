@@ -1,7 +1,6 @@
 import 'package:e_caleg/constants/apps_constant.dart';
 import 'package:e_caleg/service/apps_menu_service.dart';
 import 'package:e_caleg/service/apps_service.dart';
-import 'package:e_caleg/service/login_service.dart';
 import 'package:e_caleg/utils/apps_rc.dart';
 import 'package:e_caleg/vo/content_input_vo.dart';
 import 'package:e_caleg/vo/service_response_vo.dart';
@@ -14,14 +13,16 @@ class LoginLogic {
       label: 'Password',
       inputType: ContentInputType.password,
       isLabel: false,
-      hasNext: false
+      hasNext: false,
+      inputValue: 'test'
   );
 
   final inputPhoneNo = ContentInputVO(
       label: 'Nomor Hanphone/Username',
       inputType: ContentInputType.text,
       isLabel: false,
-      hasNext: false
+      hasNext: false,
+      inputValue: '123'
   );
 
   final inputLoginType = ContentInputVO(
@@ -94,7 +95,7 @@ class LoginLogic {
       return ServiceResponseVO(rcValidationError, 'Harap mengisi ${inputPhoneNo.label!.toLowerCase()}');
     }
 
-    ServiceResponseVO respVO = await LoginService.get().sendLoginPass(inputPhoneNo.inputValue,inputPassword.inputValue);
+    ServiceResponseVO respVO = await AppsService.get().sendLoginPass(inputPhoneNo.inputValue,inputPassword.inputValue);
 
     return respVO;
   }

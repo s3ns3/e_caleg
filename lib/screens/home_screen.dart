@@ -1,6 +1,9 @@
+import 'package:e_caleg/screens/login_screen.dart';
 import 'package:e_caleg/screens/upload/upload_full_subscreen.dart';
+import 'package:e_caleg/service/apps_service.dart';
 import 'package:e_caleg/service/navigation_service.dart';
 import 'package:e_caleg/utils/apps_ui_constant.dart';
+import 'package:e_caleg/vo/user_data_vo.dart';
 import 'package:e_caleg/widgets/apps_gradient_button.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +12,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    UserDataVO data = AppsService.get().userDataVO;
     return Scaffold(
       body: SafeArea(
         bottom: false,
@@ -40,7 +44,9 @@ class HomeScreen extends StatelessWidget {
                       ),
                       const SizedBox(width: 20.0),
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          NavigationService.get().push(LoginScreen());
+                        },
                         child: const Icon(
                           Icons.logout,
                           size: 30.0,
@@ -76,23 +82,23 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 10.0),
-                      const Text(
-                        'Asep Setiawan',
-                        style: TextStyle(
+                      Text(
+                        data.namaLengkap??'',
+                        style: const TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: kFontSizeXLarge),
                       )
                     ],
                   ),
                   const SizedBox(height: 5.0),
-                  const Text(
-                    'Jl. Garut No.11, Kacapiring, Kec. Batununggal, Kota Bandung, Jawa Barat 40271',
-                    style: TextStyle(color: Colors.black54),
+                  Text(
+                    '${data.alamat}\n${data.namaKecamatan}',
+                    style: const TextStyle(color: Colors.black54),
                   ),
                   const SizedBox(height: 10.0),
-                  const Text(
-                    'TPS 001',
-                    style: TextStyle(
+                  Text(
+                    'TPS ${data.noTps}',
+                    style: const TextStyle(
                         color: kColorBlueDark,
                         fontWeight: FontWeight.w900,
                         fontSize: kFontSizeXLarge),

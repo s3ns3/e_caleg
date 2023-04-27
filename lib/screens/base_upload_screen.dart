@@ -29,7 +29,17 @@ abstract class BaseUploadScreen extends StatelessWidget {
                         builder: (context, state) {
                       if (getPageIndex() == 5) {
                         _controller.animateTo(
-                            MediaQuery.of(context).size.width * .8,
+                            MediaQuery.of(context).size.width * .7,
+                            curve: Curves.ease,
+                            duration: const Duration(seconds: 1));
+                      } else if (getPageIndex() == 10) {
+                        _controller.animateTo(
+                            MediaQuery.of(context).size.width * .8 * 2,
+                            curve: Curves.ease,
+                            duration: const Duration(seconds: 1));
+                      } else if (getPageIndex() == 15) {
+                        _controller.animateTo(
+                            MediaQuery.of(context).size.width * .9 * 3,
                             curve: Curves.ease,
                             duration: const Duration(seconds: 1));
                       }
@@ -51,8 +61,7 @@ abstract class BaseUploadScreen extends StatelessWidget {
           Expanded(
             child: Container(
                 // height: MediaQuery.of(context).size.height - 170,
-                padding:
-                    const EdgeInsets.only(left: 20.0, right: 20.0, top: 10),
+                padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 10),
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
@@ -85,13 +94,13 @@ abstract class BaseUploadScreen extends StatelessWidget {
   Widget _displayIndicatorDot(BuildContext context, int index) {
     List<Widget> indicator = [];
     debugPrint('loop $kPageCount');
-    for (var i = 1; i <= kPageCount; i++) {
+    for (var i = 0; i <= kPageCount; i++) {
       Widget image;
       if (i < index) {
         image = const Icon(Icons.done_all, color: Colors.white, size: 20.0);
       } else if (i == index) {
         image = Text(
-          i.toString(),
+          (i+1).toString(),
           style: const TextStyle(
               color: Colors.white,
               fontSize: kFontSizeXLarge,
@@ -147,8 +156,8 @@ abstract class BaseUploadScreen extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       margin: const EdgeInsets.only(bottom: 10.0),
-      height: 70.0,
-      width: MediaQuery.of(context).size.width * .7,
+      height: 60.0,
+      width: MediaQuery.of(context).size.width * .75,
       decoration: const BoxDecoration(
           gradient: kLinearGradient,
           borderRadius: BorderRadius.only(

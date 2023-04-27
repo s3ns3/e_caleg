@@ -98,13 +98,13 @@ class AppsPasswordState extends State<AppsPassword> {
 
   InputDecoration inputDecoration(Widget? prefixIcon, Widget? suffixIcon) {
     return InputDecoration(
-      label: Text(widget.inputVO.label!) ,
+      // label: Text(widget.inputVO.label!) ,
       filled: true,
+      counterText: "",
       // labelText: widget.inputVO.label,
       fillColor: widget.inputVO.isEnable ? Colors.white : Colors.grey[200],
       focusColor: Colors.white,
       isDense: true,
-      counterText: "",
       hintText:'Masukkan ${widget.inputVO.label}',
       hintStyle: const TextStyle(
           color: Colors.grey,

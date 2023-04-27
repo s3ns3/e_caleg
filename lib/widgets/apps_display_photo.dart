@@ -16,13 +16,13 @@ class DisplayPhoto extends StatelessWidget {
       w = ClipRRect(
         borderRadius: BorderRadius.circular(10.0),
         child: Image.file(imageFile,
-          width: MediaQuery.of(context).size.width,
+          width: MediaQuery.of(context).size.width*.7,
         ),
       );
     } else {
       w = Image.asset(
             'assets/images/icons/document.png',
-            width: MediaQuery.of(context).size.width,
+            width: MediaQuery.of(context).size.width*.7,
           );
     }
 
