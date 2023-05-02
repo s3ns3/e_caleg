@@ -14,6 +14,7 @@ class FormResultSubscreen extends BaseUploadScreen {
   final String title;
   final RecognizedText recognizedText;
 
+  final FormResultLogic ocrLogic = FormResultLogic();
   FormResultSubscreen({Key? key, required this.title, required this.recognizedText})
       : super(
       key: key,
@@ -27,63 +28,62 @@ class FormResultSubscreen extends BaseUploadScreen {
     return 'Upload C1 DPRRI';
   }
 
-  @override
-  int getPageIndex() {
-    return index;
-  }
-
-  @override
-  int setIndex() {
-    return index;
-  }
+  // @override
+  // int getPageIndex() {
+  //   return index;
+  // }
+  //
+  // @override
+  // int setIndex() {
+  //   return index;
+  // }
 
   int index = 16;
-  FormResultLogic logic = FormResultLogic();
 
   @override
   Widget buildSubScreen(BuildContext context, RefreshScreenCubit bloc) {
-    logic.parseRecognizedText(recognizedText);
+    ocrLogic.parseRecognizedText(recognizedText);
     return Container(
       margin: const EdgeInsets.only(bottom: 12.0),
       child: ListView(
         children: [
           AppsInput(
-            inputVO: logic.inputCalegName1,
+            inputVO: ocrLogic.inputCalegName1,
           ),
           AppsInput(
-            inputVO: logic.inputCalegVote1,
-          ),
-          const SizedBox(height: 18.0,),
-          const Divider(),
-          AppsInput(
-            inputVO: logic.inputCalegName2,
-          ),
-          AppsInput(
-            inputVO: logic.inputCalegVote2,
+            inputVO: ocrLogic.inputCalegVote1,
           ),
           const SizedBox(height: 18.0,),
           const Divider(),
           AppsInput(
-            inputVO: logic.inputCalegName3,
+            inputVO: ocrLogic.inputCalegName2,
           ),
           AppsInput(
-            inputVO: logic.inputCalegVote3,
-          ),
-          const SizedBox(height: 18.0,),
-          const Divider(),
-          AppsInput(
-            inputVO: logic.inputCalegName4,
-          ),
-          AppsInput(
-            inputVO: logic.inputCalegVote4,
+            inputVO: ocrLogic.inputCalegVote2,
           ),
           const SizedBox(height: 18.0,),
           const Divider(),
           AppsInput(
-            inputVO: logic.inputCalegName5,
+            inputVO: ocrLogic.inputCalegName3,
           ),
           AppsInput(
-            inputVO: logic.inputCalegVote5,
+            inputVO: ocrLogic.inputCalegVote3,
+          ),
+          const SizedBox(height: 18.0,),
+          const Divider(),
+          AppsInput(
+            inputVO: ocrLogic.inputCalegName4,
+          ),
+          AppsInput(
+            inputVO: ocrLogic.inputCalegVote4,
+          ),
+          const SizedBox(height: 18.0,),
+          const Divider(),
+          AppsInput(
+            inputVO: ocrLogic.inputCalegName5,
+          ),
+          AppsInput(
+            inputVO: ocrLogic.inputCalegVote5,
           ),
         ],
       ),

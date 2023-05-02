@@ -24,4 +24,5 @@ const kLogoutDelay = Duration(seconds: 500);
 const kAppsMsgErrSystem = 'Terjadi masalah pada sistem';
 
 const kEndponitLoginPass = 'auth';
-const kEndponitDocumentInit = 'upload-document';
+const kEndponitDocumentInit = 'document-init';
+const kEndponitDocumentUpload = 'document-upload';

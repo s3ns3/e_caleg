@@ -1,5 +1,6 @@
 import 'package:e_caleg/bloc/refresh_screen_bloc.dart';
 import 'package:e_caleg/constants/apps_constant.dart';
+import 'package:e_caleg/logic/upload_logic.dart';
 import 'package:e_caleg/service/navigation_service.dart';
 import 'package:e_caleg/utils/apps_ui_constant.dart';
 import 'package:flutter/material.dart';
@@ -8,10 +9,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 abstract class BaseUploadScreen extends StatelessWidget {
   static const int kPageCount = kJumlahPartai;
   String getRegInfo();
-  int getPageIndex();
-  int setIndex();
+  // int getPageIndex();
+  // int setIndex();
   Widget buildSubScreen(BuildContext context, RefreshScreenCubit bloc);
   final RefreshScreenCubit bloc = RefreshScreenCubit();
+  final UploadDocumentLogic logic = UploadDocumentLogic();
   final Function() onBack;
 
   BaseUploadScreen({Key? key, required this.onBack}) : super(key: key);
@@ -27,17 +29,17 @@ abstract class BaseUploadScreen extends StatelessWidget {
                     create: (context) => bloc,
                     child: BlocBuilder<RefreshScreenCubit, bool>(
                         builder: (context, state) {
-                      if (getPageIndex() == 5) {
+                      if (logic.index == 5) {
                         _controller.animateTo(
                             MediaQuery.of(context).size.width * .7,
                             curve: Curves.ease,
                             duration: const Duration(seconds: 1));
-                      } else if (getPageIndex() == 10) {
+                      } else if (logic.index == 10) {
                         _controller.animateTo(
                             MediaQuery.of(context).size.width * .8 * 2,
                             curve: Curves.ease,
                             duration: const Duration(seconds: 1));
-                      } else if (getPageIndex() == 15) {
+                      } else if (logic.index == 15) {
                         _controller.animateTo(
                             MediaQuery.of(context).size.width * .9 * 3,
                             curve: Curves.ease,
@@ -57,7 +59,7 @@ abstract class BaseUploadScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           _displayIndicatorText(context),
-          _displayIndicator(context, getPageIndex()),
+          _displayIndicator(context, logic.index),
           Expanded(
             child: Container(
                 // height: MediaQuery.of(context).size.height - 170,
@@ -100,7 +102,7 @@ abstract class BaseUploadScreen extends StatelessWidget {
         image = const Icon(Icons.done_all, color: Colors.white, size: 20.0);
       } else if (i == index) {
         image = Text(
-          (i+1).toString(),
+          (i).toString(),
           style: const TextStyle(
               color: Colors.white,
               fontSize: kFontSizeXLarge,

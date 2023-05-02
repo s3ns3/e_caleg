@@ -38,52 +38,52 @@ class FormInputSubscreen extends BaseUploadScreen {
   }
 
   int index = 16;
-  FormResultLogic logic = FormResultLogic();
+  FormResultLogic ocrLogic = FormResultLogic();
 
   @override
   Widget buildSubScreen(BuildContext context, RefreshScreenCubit bloc) {
-    logic.parseRecognizedText(recognizedText);
+    ocrLogic.parseRecognizedText(recognizedText);
     return Container(
       margin: const EdgeInsets.only(bottom: 12.0),
       child: ListView(
         children: [
           AppsInput(
-            inputVO: logic.inputCalegName1,
+            inputVO: ocrLogic.inputCalegName1,
           ),
           AppsInput(
-            inputVO: logic.inputCalegVote1,
-          ),
-          const SizedBox(height: 18.0,),
-          const Divider(),
-          AppsInput(
-            inputVO: logic.inputCalegName2,
-          ),
-          AppsInput(
-            inputVO: logic.inputCalegVote2,
+            inputVO: ocrLogic.inputCalegVote1,
           ),
           const SizedBox(height: 18.0,),
           const Divider(),
           AppsInput(
-            inputVO: logic.inputCalegName3,
+            inputVO: ocrLogic.inputCalegName2,
           ),
           AppsInput(
-            inputVO: logic.inputCalegVote3,
-          ),
-          const SizedBox(height: 18.0,),
-          const Divider(),
-          AppsInput(
-            inputVO: logic.inputCalegName4,
-          ),
-          AppsInput(
-            inputVO: logic.inputCalegVote4,
+            inputVO: ocrLogic.inputCalegVote2,
           ),
           const SizedBox(height: 18.0,),
           const Divider(),
           AppsInput(
-            inputVO: logic.inputCalegName5,
+            inputVO: ocrLogic.inputCalegName3,
           ),
           AppsInput(
-            inputVO: logic.inputCalegVote5,
+            inputVO: ocrLogic.inputCalegVote3,
+          ),
+          const SizedBox(height: 18.0,),
+          const Divider(),
+          AppsInput(
+            inputVO: ocrLogic.inputCalegName4,
+          ),
+          AppsInput(
+            inputVO: ocrLogic.inputCalegVote4,
+          ),
+          const SizedBox(height: 18.0,),
+          const Divider(),
+          AppsInput(
+            inputVO: ocrLogic.inputCalegName5,
+          ),
+          AppsInput(
+            inputVO: ocrLogic.inputCalegVote5,
           ),
         ],
       ),

@@ -7,11 +7,14 @@ import 'package:e_caleg/screens/upload/image_cropper_page.dart';
 import 'package:e_caleg/service/apps_service.dart';
 import 'package:e_caleg/utils/apps_rc.dart';
 import 'package:e_caleg/utils/apps_ui_constant.dart';
+import 'package:e_caleg/vo/content_input_vo.dart';
 import 'package:e_caleg/vo/document_vo.dart';
 import 'package:e_caleg/vo/selection_item.dart';
+import 'package:e_caleg/vo/service_response_vo.dart';
 import 'package:e_caleg/widgets/apps_display_photo.dart';
 import 'package:e_caleg/widgets/apps_error_dialog.dart';
 import 'package:e_caleg/widgets/apps_gradient_button.dart';
+import 'package:e_caleg/widgets/apps_progress_dialog.dart';
 import 'package:e_caleg/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,23 +27,22 @@ class UploadFullSubscreen extends BaseUploadScreen {
   UploadFullSubscreen({Key? key, required this.title})
       : super(key: key, onBack: () {});
 
-  final UploadDocumentLogic logic = UploadDocumentLogic();
   @override
   String getRegInfo() {
     return title;
   }
 
   @override
-  int getPageIndex() {
-    return index;
-  }
+  // int getPageIndex() {
+  //   return index;
+  // }
+  //
+  // @override
+  // int setIndex() {
+  //   return index;
+  // }
 
-  @override
-  int setIndex() {
-    return index;
-  }
-
-  int index = 0;
+  // int index = 0;
   @override
   Widget buildSubScreen(BuildContext context, RefreshScreenCubit bloc) {
     return LoadingWidget(
@@ -54,14 +56,15 @@ class UploadFullSubscreen extends BaseUploadScreen {
     return BlocProvider<RefreshScreenCubit>(
         create: (context) => bloc,
         child: BlocBuilder<RefreshScreenCubit, bool>(builder: (context, state) {
-          debugPrint('documentVO : ${logic.documentVO}');
+          // debugPrint('documentVO : ${logic.listInput}');
+
           return Column(
             children: [
               Expanded(
                   child: ListView(
                 children: [
                   Text(
-                    logic.documentVO[index]
+                    logic.doc
                         .partaiName,
                     textAlign: TextAlign.center,
                     style: const TextStyle(
@@ -79,11 +82,11 @@ class UploadFullSubscreen extends BaseUploadScreen {
                                 children: [
                                   DisplayPhoto(pathImage: logic.pathPhoto),
                                   const SizedBox(width: 5.0),
-                                  index != 0
+                                  logic.index != 0
                                       ? Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
-                                          children: logic.documentVO[index].listCaleg!.map((data) {
+                                          children: logic.listInput.map((data) {
                                             return inputText(context, data);
                                           }).toList(),
                                         )
@@ -99,7 +102,7 @@ class UploadFullSubscreen extends BaseUploadScreen {
                     fontSize: kFontSizeXLarge,
                     onPressed: () {
                       logic.resetData();
-                      if (index == kJumlahPartai) {
+                      if (logic.index == kJumlahPartai) {
                         bloc.refreshScreen();
                       } else {
                         _takePhoto(context);
@@ -112,15 +115,23 @@ class UploadFullSubscreen extends BaseUploadScreen {
                           label: 'Selanjutnya',
                           radius: 15.0,
                           fontSize: kFontSizeXLarge,
-                          onPressed: () {
-                            if (index != 16) {
-                              logic.resetData();
-                              index = index + 1;
-                              setIndex();
+                          onPressed: () async{
+                            //request hit upload
+                            var pd = AppsProgressDialog(
+                                context, 'Memproses Upload Data', logic.uploadDocument());
+
+                            ServiceResponseVO res = await pd.show();
+                            if(res.rc == rcSuccess) {
                               bloc.refreshScreen();
-                            } else {
-                              _readFromPhoto(context);
                             }
+                            // if (index != 16) {
+                            //   logic.resetData();
+                            //   index = index + 1;
+                            //   setIndex();
+                            //   bloc.refreshScreen();
+                            // } else {
+                            //   _readFromPhoto(context);
+                            // }
                           },
                         )
                       : Container()
@@ -131,7 +142,7 @@ class UploadFullSubscreen extends BaseUploadScreen {
         }));
   }
 
-  Container inputText(BuildContext context, CalegVO data) {
+  Container inputText(BuildContext context, ContentInputVO vo) {
     return Container(
         margin: const EdgeInsets.only(top: 3.0, bottom: 5.0),
         width: MediaQuery.of(context).size.width * .25,
@@ -142,10 +153,12 @@ class UploadFullSubscreen extends BaseUploadScreen {
               fontSize: kFontSizeMedium,
               fontWeight: FontWeight.w500),
           keyboardType: TextInputType.number,
-          onChanged: (value) {},
+          onChanged: (value) {
+            vo.inputValue = value;
+          },
           decoration: InputDecoration(
             isDense: true,
-            label: Text('${data.calegId}. ${data.calegName!.toUpperCase()}'),
+            label: Text(vo.label!),
             hintStyle: const TextStyle(
                 color: Colors.grey,
                 fontStyle: FontStyle.normal,

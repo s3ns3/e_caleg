@@ -6,6 +6,7 @@ import 'package:e_caleg/service/apps_service.dart';
 import 'package:e_caleg/utils/apps_rc.dart';
 import 'package:e_caleg/vo/content_input_vo.dart';
 import 'package:e_caleg/vo/document_vo.dart';
+import 'package:e_caleg/vo/req_document_vo.dart';
 import 'package:e_caleg/vo/selection_item.dart';
 import 'package:e_caleg/vo/service_response_vo.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,8 +20,12 @@ class UploadDocumentLogic{
   bool _hasTakenPhoto = false;
   bool get hasTakenPhoto => _hasTakenPhoto;
   List<GeneralSelectionItem> listPartai=[];
-
   late List<DocumentVO> documentVO;
+
+  late List<ContentInputVO> listInput = [];
+  int index = 0;
+
+  DocumentVO get doc => documentVO[index];
 
   Future<ServiceResponseVO> initLogic() async {
     // prepare for list of master data
@@ -33,14 +38,68 @@ class UploadDocumentLogic{
     ServiceResponseVO responseVO =  await UploadDocumentService.get().requestInit();
     if(responseVO.rc == rcSuccess){
       documentVO = UploadDocumentService.get().documentVO;
+      createFieldInput();
     }
 
     return responseVO;
   }
 
+  Future<ServiceResponseVO> createFieldInput() async{
+    listInput.clear();
+    // debugPrint('index :$index');
+    List<CalegVO>? listCaleg = documentVO[index].listCaleg;
+    // debugPrint('listCaleg :${listCaleg.toString()}');
+    if(listCaleg!=null && listCaleg.isNotEmpty){
+      // debugPrint('masuk sini');
+      for(var data in listCaleg){
+        listInput.add(ContentInputVO(
+              label: '${data.calegId}. ${data.calegName}',
+              paramName: data.calegId
+            ));
+      }
+    }
+
+    return ServiceResponseVO(rcSuccess, '');
+  }
+
   void resetData(){
     _hasTakenPhoto = false;
     pathPhoto =null;
+    createFieldInput();
+  }
+
+  //submit data
+  Future<ServiceResponseVO> uploadDocument() async{
+    debugPrint('masuk sini');
+    if (pathPhoto == null) {
+      return ServiceResponseVO(rcValidationError, 'Harap ambil foto KTP');
+    }
+
+    ReqDocumentVO reqDocumentVO = ReqDocumentVO(partaiId:doc.partaiId);
+
+    List<ReqCalegVO> reqCalegVO =[];
+    for(var inputData in listInput){
+      debugPrint('masuk sini ${inputData.toString()}');
+      ReqCalegVO d = ReqCalegVO();
+      d.calegId = inputData.paramName;
+      d.calegPoint = inputData.inputValue;
+      reqCalegVO.add(d);
+    }
+
+    reqDocumentVO.listCaleg = reqCalegVO;
+    debugPrint('reqDocumentVO ${reqDocumentVO.toJson()}');
+
+
+    ServiceResponseVO responseVO = await UploadDocumentService.get()
+        .requestUploadDocument(reqDocumentVO: reqDocumentVO, documentPhoto: File(pathPhoto!));
+    if(responseVO.rc == rcSuccess) {
+      //reset form after send the data
+      index = index + 1;
+      resetData();
+      return ServiceResponseVO(rcSuccess, '');
+    }else{
+      return responseVO;
+    }
   }
 
   Future<ServiceResponseVO> processTakePhoto() async {
