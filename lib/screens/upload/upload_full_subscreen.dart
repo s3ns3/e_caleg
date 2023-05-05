@@ -1,71 +1,52 @@
+import 'dart:math';
+
 import 'package:e_caleg/bloc/refresh_screen_bloc.dart';
-import 'package:e_caleg/constants/apps_constant.dart';
 import 'package:e_caleg/logic/upload_logic.dart';
 import 'package:e_caleg/screens/base_upload_screen.dart';
 import 'package:e_caleg/screens/upload/form_result_subscreen.dart';
 import 'package:e_caleg/screens/upload/image_cropper_page.dart';
-import 'package:e_caleg/service/apps_service.dart';
+import 'package:e_caleg/service/navigation_service.dart';
 import 'package:e_caleg/utils/apps_rc.dart';
 import 'package:e_caleg/utils/apps_ui_constant.dart';
 import 'package:e_caleg/vo/content_input_vo.dart';
-import 'package:e_caleg/vo/document_vo.dart';
-import 'package:e_caleg/vo/selection_item.dart';
 import 'package:e_caleg/vo/service_response_vo.dart';
 import 'package:e_caleg/widgets/apps_display_photo.dart';
 import 'package:e_caleg/widgets/apps_error_dialog.dart';
 import 'package:e_caleg/widgets/apps_gradient_button.dart';
 import 'package:e_caleg/widgets/apps_progress_dialog.dart';
-import 'package:e_caleg/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../service/navigation_service.dart';
+class UploadFullSubScreen extends BaseUploadScreen {
+  static const id = 'UploadFullSubScreen';
 
-class UploadFullSubscreen extends BaseUploadScreen {
-  static const id = 'RegPreparationSubscreen';
-  final String title;
-  UploadFullSubscreen({Key? key, required this.title})
-      : super(key: key, onBack: () {});
+  final UploadDocumentLogic logic;
+  UploadFullSubScreen({Key? key, required this.logic})
+      : super(key: key, onBack: () {}, logic: logic);
 
   @override
   String getRegInfo() {
-    return title;
+    return logic.typeCaleg.namaTypeCaleg!;
   }
 
   @override
-  // int getPageIndex() {
-  //   return index;
-  // }
-  //
-  // @override
-  // int setIndex() {
-  //   return index;
-  // }
-
-  // int index = 0;
-  @override
   Widget buildSubScreen(BuildContext context, RefreshScreenCubit bloc) {
-    return LoadingWidget(
-      futureLogic: logic.initLogic,
-      child: _displayBodyContent(context),
-    );
-    // return _displayBodyContent(context);
+    return Padding(
+        padding: const EdgeInsets.only(bottom: 10.0),
+        child: _displayBodyContent(context));
   }
 
   Widget _displayBodyContent(BuildContext context) {
     return BlocProvider<RefreshScreenCubit>(
         create: (context) => bloc,
         child: BlocBuilder<RefreshScreenCubit, bool>(builder: (context, state) {
-          // debugPrint('documentVO : ${logic.listInput}');
-
           return Column(
             children: [
               Expanded(
                   child: ListView(
                 children: [
                   Text(
-                    logic.doc
-                        .partaiName,
+                    logic.doc.partaiName,
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                         fontWeight: FontWeight.w700, fontSize: kFontSizeXLarge),
@@ -77,32 +58,52 @@ class UploadFullSubscreen extends BaseUploadScreen {
                           alignment: Alignment.center,
                           child: SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  DisplayPhoto(pathImage: logic.pathPhoto),
-                                  const SizedBox(width: 5.0),
-                                  logic.index != 0
-                                      ? Column(
+                              child: logic.index != 0
+                                  ? Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        DisplayPhoto(
+                                            pathImage: logic.pathPhoto),
+                                        const SizedBox(width: 5.0),
+                                        Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: logic.listInput.map((data) {
-                                            return inputText(context, data);
+                                            return inputText(
+                                                context, data, .25);
                                           }).toList(),
                                         )
-                                      : Container()
-                                ],
-                              )))
+                                      ],
+                                    )
+                                  : Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                          DisplayPhoto(
+                                              pathImage: logic.pathPhoto,
+                                              width: .95),
+                                          const SizedBox(height: 5.0),
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children:
+                                                logic.listInput.map((data) {
+                                              return inputText(
+                                                  context, data, .95);
+                                            }).toList(),
+                                          )
+                                        ])))
                       : Container(),
                   AppsGradientButton(
                     label: logic.pathPhoto != null
-                        ? 'Ambil Ulang Foto'
-                        : 'Ambil Foto',
+                        ? 'Ambil Ulang Foto'.toUpperCase()
+                        : 'Ambil Foto'.toUpperCase(),
                     radius: 15.0,
                     fontSize: kFontSizeXLarge,
                     onPressed: () {
                       logic.resetData();
-                      if (logic.index == kJumlahPartai) {
+                      if (logic.index == logic.documentVO.length) {
                         bloc.refreshScreen();
                       } else {
                         _takePhoto(context);
@@ -112,26 +113,20 @@ class UploadFullSubscreen extends BaseUploadScreen {
                   const SizedBox(height: 10.0),
                   logic.pathPhoto != null
                       ? AppsGradientButton(
-                          label: 'Selanjutnya',
+                          label: 'LANJUT',
                           radius: 15.0,
                           fontSize: kFontSizeXLarge,
-                          onPressed: () async{
+                          onPressed: () async {
                             //request hit upload
                             var pd = AppsProgressDialog(
-                                context, 'Memproses Upload Data', logic.uploadDocument());
+                                context,
+                                'Memproses Upload Data',
+                                logic.uploadDocument());
 
                             ServiceResponseVO res = await pd.show();
-                            if(res.rc == rcSuccess) {
+                            if (res.rc == rcSuccess) {
                               bloc.refreshScreen();
                             }
-                            // if (index != 16) {
-                            //   logic.resetData();
-                            //   index = index + 1;
-                            //   setIndex();
-                            //   bloc.refreshScreen();
-                            // } else {
-                            //   _readFromPhoto(context);
-                            // }
                           },
                         )
                       : Container()
@@ -142,10 +137,10 @@ class UploadFullSubscreen extends BaseUploadScreen {
         }));
   }
 
-  Container inputText(BuildContext context, ContentInputVO vo) {
+  Container inputText(BuildContext context, ContentInputVO vo, double width) {
     return Container(
         margin: const EdgeInsets.only(top: 3.0, bottom: 5.0),
-        width: MediaQuery.of(context).size.width * .25,
+        width: MediaQuery.of(context).size.width * width,
         child: TextField(
           textInputAction: TextInputAction.next,
           style: const TextStyle(
@@ -203,6 +198,7 @@ class UploadFullSubscreen extends BaseUploadScreen {
     NavigationService.get().push(FormResultSubscreen(
       title: 'Hasil Perhitungan Suara',
       recognizedText: result,
+      logic: logic,
     ));
   }
 }

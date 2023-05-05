@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 
 class DisplayPhoto extends StatelessWidget {
   final String? pathImage;
-
-  const DisplayPhoto({super.key, this.pathImage});
+  final double width;
+  const DisplayPhoto({super.key, this.pathImage, this.width = .7});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class DisplayPhoto extends StatelessWidget {
     } else {
       w = Image.asset(
             'assets/images/icons/document.png',
-            width: MediaQuery.of(context).size.width*.7,
+            width: MediaQuery.of(context).size.width*width,
           );
     }
 

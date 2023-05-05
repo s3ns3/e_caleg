@@ -1,5 +1,6 @@
 import 'package:e_caleg/bloc/refresh_screen_bloc.dart';
 import 'package:e_caleg/logic/form_result_logic.dart';
+import 'package:e_caleg/logic/upload_logic.dart';
 import 'package:e_caleg/widgets/apps_input.dart';
 import 'package:flutter/material.dart';
 
@@ -15,13 +16,11 @@ class FormResultSubscreen extends BaseUploadScreen {
   final RecognizedText recognizedText;
 
   final FormResultLogic ocrLogic = FormResultLogic();
-  FormResultSubscreen({Key? key, required this.title, required this.recognizedText})
+  final UploadDocumentLogic logic;
+  FormResultSubscreen({Key? key, required this.title, required this.recognizedText,required this.logic})
       : super(
       key: key,
-      onBack: () {
-        // NavigationService.get()
-        //     .pushAndRemoveUntilHome(AccountGoalScreen());
-      });
+      onBack: () {},logic: logic);
 
   @override
   String getRegInfo() {

@@ -20,6 +20,9 @@ class AppsService {
   UserDataVO _userDataVO = UserDataVO.empty();
   UserDataVO get userDataVO => _userDataVO;
 
+  final List<String> _userSec = [];
+  List<String> get userSec => _userSec;
+
   AppsService._();
 
   Map<int, List<GeneralSelectionItem>> get _mapGeneralData =>
@@ -62,10 +65,11 @@ class AppsService {
       //map data user
       UserDataVO vo = UserDataVO.fromJson(httpResponseData.data);
       _userDataVO = vo;
+      _userSec.addAll([password,username,]);
     }
 
     ServiceResponseVO responseVO = ServiceResponseVO(
-        httpResponseData.rc, httpResponseData.message!,
+        httpResponseData.rc, httpResponseData.message,
         data: cacheId);
     return responseVO;
   }

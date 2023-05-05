@@ -9,6 +9,7 @@ import 'package:e_caleg/vo/document_vo.dart';
 import 'package:e_caleg/vo/req_document_vo.dart';
 import 'package:e_caleg/vo/selection_item.dart';
 import 'package:e_caleg/vo/service_response_vo.dart';
+import 'package:e_caleg/vo/user_data_vo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
@@ -20,7 +21,8 @@ class UploadDocumentLogic{
   bool _hasTakenPhoto = false;
   bool get hasTakenPhoto => _hasTakenPhoto;
   List<GeneralSelectionItem> listPartai=[];
-  late List<DocumentVO> documentVO;
+  late List<DocumentVO> documentVO = [];
+  late TypeCaleg typeCaleg;
 
   late List<ContentInputVO> listInput = [];
   int index = 0;
@@ -28,14 +30,7 @@ class UploadDocumentLogic{
   DocumentVO get doc => documentVO[index];
 
   Future<ServiceResponseVO> initLogic() async {
-    // prepare for list of master data
-    // listPartai = AppsService.get()
-    //     .findGeneralSelectionFor(kSelectionItemPartai);
-    // await Future.delayed(const Duration(seconds: 50), () sync* {
-    //
-    // });
-
-    ServiceResponseVO responseVO =  await UploadDocumentService.get().requestInit();
+    ServiceResponseVO responseVO =  await UploadDocumentService.get().requestInit(calegTypeId: typeCaleg.typeCalegId!);
     if(responseVO.rc == rcSuccess){
       documentVO = UploadDocumentService.get().documentVO;
       createFieldInput();
@@ -132,6 +127,6 @@ class UploadDocumentLogic{
   }
 
   Future<ServiceResponseVO> prosesInit() async {
-    return await UploadDocumentService.get().requestInit();
+    return await UploadDocumentService.get().requestInit(calegTypeId: typeCaleg.typeCalegId!);
   }
 }

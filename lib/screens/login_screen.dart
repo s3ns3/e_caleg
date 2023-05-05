@@ -152,7 +152,7 @@ class LoginScreen extends StatelessWidget {
     }
     final respVO = await pd.show();
     if (respVO.rc == rcSuccess) {
-      NavigationService.get().pushReplacement(const HomeScreen());
+      NavigationService.get().pushReplacement(HomeScreen());
     // } else if (respVO.rc == rcAppsLoginNeedOtp) {
     //   NavigationService.get().push(LoginOtpScreen(logic: widget.logic));
     // } else if (respVO.rc == rcAppsLoginNeedCreatePin) {

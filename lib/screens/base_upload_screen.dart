@@ -1,22 +1,19 @@
 import 'package:e_caleg/bloc/refresh_screen_bloc.dart';
-import 'package:e_caleg/constants/apps_constant.dart';
 import 'package:e_caleg/logic/upload_logic.dart';
+import 'package:e_caleg/service/UploadDocumentService.dart';
 import 'package:e_caleg/service/navigation_service.dart';
 import 'package:e_caleg/utils/apps_ui_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 abstract class BaseUploadScreen extends StatelessWidget {
-  static const int kPageCount = kJumlahPartai;
   String getRegInfo();
-  // int getPageIndex();
-  // int setIndex();
   Widget buildSubScreen(BuildContext context, RefreshScreenCubit bloc);
   final RefreshScreenCubit bloc = RefreshScreenCubit();
-  final UploadDocumentLogic logic = UploadDocumentLogic();
+  final UploadDocumentLogic logic;
   final Function() onBack;
 
-  BaseUploadScreen({Key? key, required this.onBack}) : super(key: key);
+  BaseUploadScreen({Key? key, required this.onBack, required this.logic}) : super(key: key);
 
   final ScrollController _controller = ScrollController();
   @override
@@ -80,22 +77,28 @@ abstract class BaseUploadScreen extends StatelessWidget {
         alignment: Alignment.topCenter,
         child: Column(
           children: [
-            FutureBuilder(
-                future: Future.delayed(const Duration(milliseconds: 200)),
-                builder: (context, snapshot) {
-                  // need to be rebuild again, because the indicator is not refreshed
-                  return SingleChildScrollView(
+            // FutureBuilder(
+            //     future: Future.delayed(const Duration(milliseconds: 200)),
+            //     builder: (context, snapshot) {
+            //       // need to be rebuild again, because the indicator is not refreshed
+            //       if (snapshot.connectionState == ConnectionState.waiting) {
+            //         return Container();
+            //       }
+            //       return
+                    SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       controller: _controller,
-                      child: _displayIndicatorDot(context, index));
-                })
+                      child: _displayIndicatorDot(context, index))
+
+                // })
           ],
         ));
   }
 
   Widget _displayIndicatorDot(BuildContext context, int index) {
     List<Widget> indicator = [];
-    debugPrint('loop $kPageCount');
+    // debugPrint('loop $kPageCount');
+    int kPageCount = UploadDocumentService.get().documentVO.length;
     for (var i = 0; i <= kPageCount; i++) {
       Widget image;
       if (i < index) {

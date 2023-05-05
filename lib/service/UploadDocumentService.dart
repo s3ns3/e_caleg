@@ -22,12 +22,11 @@ class UploadDocumentService {
 
   UploadDocumentService._();
 
-  Future<ServiceResponseVO> requestInit() async {
+  Future<ServiceResponseVO> requestInit({required String calegTypeId}) async {
     Map<String, String> headers =
         await SettingService.get().createHttpHeaders();
     Map<String, String> reqVO = {
-      'tpsId': '1',
-      'documentId':'2'
+      'calegTypeId': calegTypeId,
     };
 
     String bodyContent = jsonEncode(reqVO);
@@ -60,7 +59,7 @@ class UploadDocumentService {
     await SettingService.get().createHttpHeaders();
     String bodyContent = jsonEncode(reqDocumentVO);
     Map<String, File> files = {
-      'file': documentPhoto
+      'fileDokumen': documentPhoto
     };
 
     final networkHttp = AppsNetworkHttp.get();

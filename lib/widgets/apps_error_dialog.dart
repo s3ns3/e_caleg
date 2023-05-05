@@ -1,7 +1,6 @@
 import 'package:e_caleg/service/navigation_service.dart';
 import 'package:e_caleg/utils/apps_ui_constant.dart';
 import 'package:e_caleg/widgets/apps_gradient_button.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 Future showAppsErrorDialog(BuildContext context, String errMsg) async {
@@ -11,13 +10,13 @@ Future showAppsErrorDialog(BuildContext context, String errMsg) async {
       builder: (context) {
         return Dialog(
           backgroundColor: Colors.white,
-          insetPadding: EdgeInsets.all(0),
+          insetPadding: const EdgeInsets.all(0),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5),
           ),
           elevation: 20,
           child: Padding(
-            padding: EdgeInsets.symmetric(
+            padding: const EdgeInsets.symmetric(
               horizontal: 0,
               vertical: 0,
             ),
@@ -26,17 +25,17 @@ Future showAppsErrorDialog(BuildContext context, String errMsg) async {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
                     Container(
                         width: MediaQuery.of(context).size.width * 0.8,
-                        padding: EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(10),
                         // color: Colors.green,
                         alignment: Alignment.center,
                         child: Text(errMsg,
                             textAlign: TextAlign.center,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: kFontSizeLarge))),
                     Container(
                       width: MediaQuery.of(context).size.width * 0.8,

@@ -1,18 +1,24 @@
+import 'package:e_caleg/logic/upload_logic.dart';
 import 'package:e_caleg/screens/login_screen.dart';
 import 'package:e_caleg/screens/upload/upload_full_subscreen.dart';
 import 'package:e_caleg/service/apps_service.dart';
 import 'package:e_caleg/service/navigation_service.dart';
+import 'package:e_caleg/utils/apps_rc.dart';
 import 'package:e_caleg/utils/apps_ui_constant.dart';
+import 'package:e_caleg/vo/service_response_vo.dart';
 import 'package:e_caleg/vo/user_data_vo.dart';
+import 'package:e_caleg/widgets/apps_error_dialog.dart';
 import 'package:e_caleg/widgets/apps_gradient_button.dart';
+import 'package:e_caleg/widgets/apps_progress_dialog.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  HomeScreen({super.key});
+  final UserDataVO data = AppsService.get().userDataVO;
 
   @override
   Widget build(BuildContext context) {
-    UserDataVO data = AppsService.get().userDataVO;
+    debugPrint('userData :${data.toString()}');
     return Scaffold(
       body: SafeArea(
         bottom: false,
@@ -83,7 +89,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 10.0),
                       Text(
-                        data.namaLengkap??'',
+                        data.namaLengkap ?? '',
                         style: const TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: kFontSizeXLarge),
@@ -107,32 +113,32 @@ class HomeScreen extends StatelessWidget {
                   Expanded(
                       child: SingleChildScrollView(
                     child: Column(
-                      children: [
-                        AppsGradientButton(
-                          radius: 8.0,
-                          label: 'Upload C1 DPRRI',
-                          onPressed: () {
-                            NavigationService.get().push(UploadFullSubscreen(title: 'Upload C1 DPRRI'));
-                          },
-                        ),
-                        const SizedBox(height: 5.0),
-                        AppsGradientButton(
-                          radius: 8.0,
-                          label: 'Upload C1 DPR Privinsi',
-                          onPressed: () {
-                            NavigationService.get().push(UploadFullSubscreen(title: 'Upload C1 DPR Privinsi'));
-                          },
-                        ),
-                        const SizedBox(height: 5.0),
-                        AppsGradientButton(
-                          radius: 8.0,
-                          label: 'Upload C1 DPRD',
-                          onPressed: () {
-                            NavigationService.get().push(UploadFullSubscreen(title: 'Upload C1 DPRD'));
-                          },
-                        ),
-                        const SizedBox(height: 5.0),
-                      ],
+                      children: data.typeCaleg!.map(
+                        (data) {
+                          return Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 5.0),
+                              child: AppsGradientButton(
+                                radius: 8.0,
+                                label: data.namaTypeCaleg!,
+                                onPressed: () async {
+                                  UploadDocumentLogic logic =
+                                      UploadDocumentLogic();
+                                  logic.typeCaleg = data;
+                                  var pd = AppsProgressDialog(
+                                      context,
+                                      'Loading data ${data.namaTypeCaleg!}',
+                                      logic.initLogic());
+                                  ServiceResponseVO res = await pd.show();
+                                  if (res.rc == rcSuccess) {
+                                    NavigationService.get().push(
+                                        UploadFullSubScreen(logic: logic));
+                                  } else {
+                                    showAppsErrorDialog(context, res.msg);
+                                  }
+                                },
+                              ));
+                        },
+                      ).toList(),
                     ),
                   ))
                 ],
