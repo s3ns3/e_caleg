@@ -17,8 +17,10 @@ class UploadDocumentService {
   static final UploadDocumentService _instance = UploadDocumentService._();
   static UploadDocumentService get() => _instance;
 
-  List<DocumentVO> _documentVO = [];
-  List<DocumentVO> get documentVO => _documentVO;
+  // List<DocumentVO> _documentVO = [];
+  // List<DocumentVO> get documentVO => _documentVO;
+  late DocumentResponse _documentResponse;
+  DocumentResponse get documentResponse => _documentResponse;
 
   UploadDocumentService._();
 
@@ -40,14 +42,11 @@ class UploadDocumentService {
     debugPrint('[$tag] --> requestInit $httpResponseData');
     if (httpResponseData.rc == rcSuccess) {
       //map data
-      List<DocumentVO> list = <DocumentVO>[];
-      httpResponseData.data.forEach((v) {
-        list.add(DocumentVO.fromJson(v));
-      });
-      _documentVO = list;
+      _documentResponse = DocumentResponse.fromJson(httpResponseData.data);
+      // _documentVO = documentResponse.listDokumen!;
     }
 
-    debugPrint('[$tag] --> _documentVO $_documentVO');
+    debugPrint('[$tag] --> _documentResponse $_documentResponse');
 
     ServiceResponseVO responseVO =
         ServiceResponseVO(httpResponseData.rc, httpResponseData.message);
@@ -73,8 +72,6 @@ class UploadDocumentService {
     if (httpResponseData.rc == rcSuccess) {
       //save image n count to db
     }
-
-    debugPrint('[$tag] --> _documentVO $_documentVO');
 
     ServiceResponseVO responseVO =
     ServiceResponseVO(httpResponseData.rc, httpResponseData.message);

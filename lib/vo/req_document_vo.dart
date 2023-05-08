@@ -1,23 +1,17 @@
 class ReqDocumentVO {
   String partaiId = '';
+  String typeCalegId = '';
+  String suaraPartai;
   List<ReqCalegVO>? listCaleg;
 
   ReqDocumentVO(
-      {required this.partaiId,this.listCaleg});
-
-  ReqDocumentVO.fromJson(Map<String, dynamic> json) {
-    partaiId = json['partaiId']??'';
-    if (json['listCaleg'] != null) {
-      listCaleg = <ReqCalegVO>[];
-      json['listCaleg'].forEach((v) {
-        listCaleg?.add(new ReqCalegVO.fromJson(v));
-      });
-    }
-  }
+      {required this.partaiId, required this.typeCalegId,this.listCaleg, this.suaraPartai = '0'});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['partaiId'] = this.partaiId;
+    data['typeCalegId'] = this.typeCalegId;
+    data['suaraPartai'] = this.suaraPartai;
     if (this.listCaleg != null) {
       data['listCaleg'] = this.listCaleg!.map((v) => v.toJson()).toList();
     }
@@ -30,11 +24,6 @@ class ReqCalegVO {
   String? calegPoint;
 
   ReqCalegVO({this.calegId, this.calegPoint});
-
-  ReqCalegVO.fromJson(Map<String, dynamic> json) {
-    calegId = json['calegId'];
-    calegPoint = json['calegPoint'];
-  }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();

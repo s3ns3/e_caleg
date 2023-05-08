@@ -13,7 +13,8 @@ abstract class BaseUploadScreen extends StatelessWidget {
   final UploadDocumentLogic logic;
   final Function() onBack;
 
-  BaseUploadScreen({Key? key, required this.onBack, required this.logic}) : super(key: key);
+  BaseUploadScreen({Key? key, required this.onBack, required this.logic})
+      : super(key: key);
 
   final ScrollController _controller = ScrollController();
   @override
@@ -56,6 +57,16 @@ abstract class BaseUploadScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           _displayIndicatorText(context),
+          Padding(
+            padding: const EdgeInsets.only(left: 10.0),
+            child: Text(
+              logic.doc.partaiName,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                  fontWeight: FontWeight.w700, fontSize: kFontSizeXLarge),
+            ),
+          ),
+          const SizedBox(height: 10.0),
           _displayIndicator(context, logic.index),
           Expanded(
             child: Container(
@@ -85,12 +96,12 @@ abstract class BaseUploadScreen extends StatelessWidget {
             //         return Container();
             //       }
             //       return
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      controller: _controller,
-                      child: _displayIndicatorDot(context, index))
+            SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                controller: _controller,
+                child: _displayIndicatorDot(context, index))
 
-                // })
+            // })
           ],
         ));
   }
@@ -98,7 +109,8 @@ abstract class BaseUploadScreen extends StatelessWidget {
   Widget _displayIndicatorDot(BuildContext context, int index) {
     List<Widget> indicator = [];
     // debugPrint('loop $kPageCount');
-    int kPageCount = UploadDocumentService.get().documentVO.length;
+    int kPageCount =
+        UploadDocumentService.get().documentResponse.listDokumen!.length;
     for (var i = 0; i <= kPageCount; i++) {
       Widget image;
       if (i < index) {

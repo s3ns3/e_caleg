@@ -13,6 +13,7 @@ import 'package:e_caleg/vo/service_response_vo.dart';
 import 'package:e_caleg/widgets/apps_display_photo.dart';
 import 'package:e_caleg/widgets/apps_error_dialog.dart';
 import 'package:e_caleg/widgets/apps_gradient_button.dart';
+import 'package:e_caleg/widgets/apps_input.dart';
 import 'package:e_caleg/widgets/apps_progress_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -45,13 +46,6 @@ class UploadFullSubScreen extends BaseUploadScreen {
               Expanded(
                   child: ListView(
                 children: [
-                  Text(
-                    logic.doc.partaiName,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.w700, fontSize: kFontSizeXLarge),
-                  ),
-                  const SizedBox(height: 10.0),
                   logic.pathPhoto != null
                       ? Container(
                           padding: const EdgeInsets.only(bottom: 20.0),
@@ -59,20 +53,31 @@ class UploadFullSubScreen extends BaseUploadScreen {
                           child: SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
                               child: logic.index != 0
-                                  ? Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                  ? Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        DisplayPhoto(
-                                            pathImage: logic.pathPhoto),
-                                        const SizedBox(width: 5.0),
-                                        Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: logic.listInput.map((data) {
-                                            return inputText(
-                                                context, data, .25);
-                                          }).toList(),
+                                        Container(
+                                          padding: const EdgeInsets.only(bottom: 5.0),
+                                          child:inputText(context,
+                                                logic.inputPartaiPoint,.7)),
+                                        Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            DisplayPhoto(
+                                                pathImage: logic.pathPhoto),
+                                            const SizedBox(width: 5.0),
+                                            Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children:
+                                                  logic.listInput.map((data) {
+                                                return inputText(
+                                                    context, data, .25);
+                                              }).toList(),
+                                            )
+                                          ],
                                         )
                                       ],
                                     )
@@ -103,7 +108,8 @@ class UploadFullSubScreen extends BaseUploadScreen {
                     fontSize: kFontSizeXLarge,
                     onPressed: () {
                       logic.resetData();
-                      if (logic.index == logic.documentVO.length) {
+                      if (logic.index ==
+                          logic.documentResponse.listDokumen!.length) {
                         bloc.refreshScreen();
                       } else {
                         _takePhoto(context);
