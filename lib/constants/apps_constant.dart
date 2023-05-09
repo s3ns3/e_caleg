@@ -11,7 +11,7 @@ const kPageDataLoginFinger = 3;
 const kPageUploadFull= 1;
 
 // const kEngineUrlDebug = 'https://saksi.punyasurya.com/api/';
-const kEngineUrlDebug = 'http://192.168.1.21:8080/';
+const kEngineUrlDebug = 'http://192.168.0.108:8080/';
 const kEngineUrlRelease = 'https://saksi.punyasurya.com/api/';
 const kAllowAllSsl = true;
 const rcPictureNotTaken = 'X501';

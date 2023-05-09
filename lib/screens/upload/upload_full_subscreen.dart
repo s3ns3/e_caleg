@@ -17,6 +17,7 @@ import 'package:e_caleg/widgets/apps_input.dart';
 import 'package:e_caleg/widgets/apps_progress_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 
 class UploadFullSubScreen extends BaseUploadScreen {
   static const id = 'UploadFullSubScreen';
@@ -144,10 +145,13 @@ class UploadFullSubScreen extends BaseUploadScreen {
   }
 
   Container inputText(BuildContext context, ContentInputVO vo, double width) {
+    TextEditingController _textCtrl = TextEditingController();
+    _textCtrl.text = vo.inputValue;
     return Container(
         margin: const EdgeInsets.only(top: 3.0, bottom: 5.0),
         width: MediaQuery.of(context).size.width * width,
         child: TextField(
+          controller: _textCtrl,
           textInputAction: TextInputAction.next,
           style: const TextStyle(
               color: Colors.black,
@@ -189,7 +193,8 @@ class UploadFullSubScreen extends BaseUploadScreen {
   void _takePhoto(BuildContext context) async {
     final respVO = await logic.processTakePhoto();
     if (respVO.rc == rcSuccess) {
-      imageCropperView(respVO.msg, logic, context).then((value) {
+      imageCropperView(respVO.msg, logic, context).then((value) async {
+        await logic.parseRecognizedText();
         if (logic.pathPhoto != '') {
           bloc.refreshScreen();
         }

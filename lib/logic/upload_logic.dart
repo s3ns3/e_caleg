@@ -140,6 +140,59 @@ class UploadDocumentLogic {
     return recognizedText;
   }
 
+  Future parseRecognizedText() async {
+    List<CalegVO>? listCaleg = _documentResponse.listDokumen![index].listCaleg;
+    String partaiName = _documentResponse.listDokumen![index].partaiName.toLowerCase().replaceAll(' ', '');
+    List<TextBlock> calegBlocks = [];
+    TextBlock? partaiBlock;
+    RecognizedText recognizedText = await recognizeTextFromPhoto();
+    for (var block in recognizedText.blocks) {
+      String blockText = block.text.toLowerCase().replaceAll(' ', '');
+      if(blockText.contains(partaiName)) {
+        partaiBlock = block;
+        debugPrint("$partaiName - ${block.text}");
+      }
+      if (listCaleg != null && listCaleg.isNotEmpty) {
+        for (var data in listCaleg) {
+          String calegName = data.calegName!.toLowerCase().replaceAll(' ', '');
+          if (blockText.contains(calegName)) {
+            calegBlocks.add(block);
+            debugPrint("$calegName - ${block.text}");
+          }
+        }
+      }
+    }
+    getPartaiPointFromTextBlock(recognizedText.blocks, partaiBlock!);
+    getCalegPointFromTextBlock(recognizedText.blocks, calegBlocks);
+  }
+
+  void getPartaiPointFromTextBlock(List<TextBlock> blocks, TextBlock partaiBlock) {
+    for (var block in blocks) {
+      int diff = block.cornerPoints[0].y - partaiBlock.cornerPoints[0].y;
+      if (block.text != partaiBlock.text && diff.abs() < 5) {
+        inputPartaiPoint.inputValue = block.text;
+      }
+    }
+  }
+
+  void getCalegPointFromTextBlock(
+      List<TextBlock> blocks, List<TextBlock> calegBlocks) {
+    int i = 0;
+    for (var input in listInput) {
+      if(i < calegBlocks.length) {
+        for (var block in blocks) {
+          int diff = block.cornerPoints[0].y - calegBlocks[i].cornerPoints[0].y;
+          debugPrint("${block.text} - $diff");
+          if (block.text != calegBlocks[i].text && diff.abs() < 20) {
+            input.inputValue = block.text;
+            debugPrint(input.toString());
+          }
+        }
+      }
+      i++;
+    }
+  }
+
   Future<ServiceResponseVO> prosesInit() async {
     return await UploadDocumentService.get()
         .requestInit(calegTypeId: typeCaleg.typeCalegId!);
