@@ -162,8 +162,12 @@ class UploadDocumentLogic {
         }
       }
     }
-    getPartaiPointFromTextBlock(recognizedText.blocks, partaiBlock!);
-    getCalegPointFromTextBlock(recognizedText.blocks, calegBlocks);
+    if(partaiBlock != null) {
+      getPartaiPointFromTextBlock(recognizedText.blocks, partaiBlock);
+    }
+    if(calegBlocks.isNotEmpty) {
+      getCalegPointFromTextBlock(recognizedText.blocks, calegBlocks);
+    }
   }
 
   void getPartaiPointFromTextBlock(List<TextBlock> blocks, TextBlock partaiBlock) {
